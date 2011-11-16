@@ -21,9 +21,8 @@ public class SpugeApplication extends Application
 		this.channel = new ChannelSmsImpl();
 		
 		// TODO: Init venues
+		// TESTS
         readVenues();
-
-		// TEST
 		
 		super.onCreate();
 	}
