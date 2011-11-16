@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="venues">
+        <item>Meritähti=Pint at Meritähti?</item>
+        <item>Iltakoulu=Pint at Iltakoulu?</item>
+        <item>William K=Pint at Willam K?</item>
+    </string-array>
+</resources>
