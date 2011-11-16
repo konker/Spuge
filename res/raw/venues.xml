@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<venues>
+    <venue>
+        <name>Anna K</name>
+        <message>Do you want to go to Anna K?</message>
+    </venue>
+    <venue>
+        <name>William K</name>
+        <message>Do you want to go to William K?</message>
+    </venue>
+    <venue>
+        <name>Meritähti</name>
+        <message>Do you want to go to Meritähti?</message>
+    </venue>
+</venues>

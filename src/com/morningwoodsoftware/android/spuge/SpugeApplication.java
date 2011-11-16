@@ -21,6 +21,8 @@ public class SpugeApplication extends Application
 		this.channel = new ChannelSmsImpl();
 		
 		// TODO: Init venues
+        readVenues();
+
 		// TEST
 		
 		super.onCreate();
@@ -49,7 +51,7 @@ public class SpugeApplication extends Application
 	/**
 	 * Gets a message matching passed venue
 	 * 
-	 * @param venu
+	 * @param venue
 	 * @return
 	 */
 	private Message getMessage(Venue venue)
@@ -57,4 +59,21 @@ public class SpugeApplication extends Application
 		// TODO: Return matching message
 		return null;
 	}
+
+	/**
+	 * Reads and constructs a list of venues
+	 * 
+	 * @return
+	 */
+    private void readVenues() {
+        VenueParser parser = new VenueParser(this);
+        //FIXME: use setVenues(..) ?
+        //FIXME: exceptions
+        try {
+            venues = parser.readVenues();
+        }
+        catch(Exception ex) {
+            //FIXME: now what?
+        }
+    }
 }
