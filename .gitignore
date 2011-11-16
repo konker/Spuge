@@ -1,0 +1,22 @@
+# Compiled source #
+###################
+*.class
+*.ap_
+*.dex
+gen/
+bin/
+etc/
+
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+.classpath
+.project
+.settings
+
+# Tags file
+######################
+.tags
