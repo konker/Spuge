@@ -21,7 +21,7 @@ public class SpugeApplication extends Application
 		this.channel = new ChannelSmsImpl();
 		
 		// TODO: Init venues
-		// TEST
+		// TESTS
 		
 		super.onCreate();
 	}
@@ -43,7 +43,9 @@ public class SpugeApplication extends Application
 	 */
 	public void sendMessage(Venue venue)
 	{
-		// TODO: Send using channel
+		Message message = getMessage(venue);
+		// TODO: Get receiver
+		// channel.send(message, receiver)
 	}
 	
 	/**

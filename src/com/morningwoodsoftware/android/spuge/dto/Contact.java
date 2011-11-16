@@ -4,6 +4,11 @@ public class Contact
 {
 	private String mobileNr;
 
+	public Contact(String mobileNr) {
+		super();
+		this.mobileNr = mobileNr;
+	}
+
 	public String getMobileNr() {
 		return mobileNr;
 	}
