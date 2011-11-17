@@ -4,9 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import com.morningwoodsoftware.android.spuge.channel.Channel;
+import com.morningwoodsoftware.android.spuge.channel.ChannelListener;
 import com.morningwoodsoftware.android.spuge.channel.impl.sms.ChannelSmsImpl;
+import com.morningwoodsoftware.android.spuge.dto.Contact;
 import com.morningwoodsoftware.android.spuge.dto.Message;
 import com.morningwoodsoftware.android.spuge.dto.Venue;
 
@@ -42,11 +47,40 @@ public class SpugeApplication extends Application
 	 * 
 	 * @param venue
 	 */
-	public void sendMessage(Venue venue)
+	public void sendMessage(Venue venue, final Intent intent)
 	{
-		Message message = getMessage(venue);
+		// TODO: Get message from venue
+		// Message message = getMessage(venue);
+		
 		// TODO: Get receiver
-		// channel.send(message, receiver)
+		
+		// TESTING: Foo message & receiver
+		Message message = new Message("1", "Some message body");
+		Contact receiver = new Contact("5554");
+		
+		// TODO: Make this properly
+		channel.send(message, receiver, 
+				new ChannelListener( this.getApplicationContext() ) 
+		{
+			@Override
+			public void onMessageSent() {
+				Log.d("sendMessage()", "Message sent successfully!");
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onMessageFailed() {
+				Log.d("sendMessage()", "Message failed!");
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onSentMessageReceived() {
+				Log.d("sendMessage()", "Sent Message received!");
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	/**

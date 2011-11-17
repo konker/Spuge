@@ -49,6 +49,7 @@ public class VenuesActivity extends Activity implements OnClickListener
     }
 
     public void onClick(View view) {
+    	app.sendMessage( null, this.getIntent() );
         Log.d(TAG, "VenuesActivity.onClick: " + ((Button)view).getText());
     }
 }
