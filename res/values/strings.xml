@@ -2,4 +2,8 @@
 <resources>
     <string name="app_name">Spuge</string>
     <string name="venues">Venues</string>
+    <string name="titleVenue">Venues</string>
+    <string name="titlePrefs">Preferences</string>
+    <string name="titleNumber">Number</string>
+    <string name="summaryNumber">FIXME: Number summary</string>
 </resources>

@@ -12,4 +12,8 @@
         <name>Meritähti</name>
         <message>Do you want to go to Meritähti?</message>
     </venue>
+    <venue>
+        <name>Pub Ikkuna</name>
+        <message>Do you want to go to Pub Ikkuna?</message>
+    </venue>
 </venues>

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.MenuItem;
+import android.view.Menu;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -25,8 +27,7 @@ public class VenueActivity extends Activity implements OnClickListener
 
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) 
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venues);
 
@@ -36,6 +37,16 @@ public class VenueActivity extends Activity implements OnClickListener
         // render the venues
         renderVenues();
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	return ActivityUtil.onCreateOptionsMenu(this, menu);
+    }
+    
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	return ActivityUtil.onOptionsItemSelected(this, item);
+	}
 
     private void renderVenues() {
         if (venueLayout != null) {
@@ -49,21 +60,17 @@ public class VenueActivity extends Activity implements OnClickListener
         }
     }
 
-    public void onClick(View view) 
-    {
+    public void onClick(View view) {
         Log.d(TAG, "VenuesActivity.onClick: " + ((Button)view).getText());
         
-        try
-        {
+        try {
         	// TODO: Get venue
         	app.sendMessage( null );
         }
-        catch(NotReadyException e)
-        {
+        catch(NotReadyException e) {
         	// TODO: Output previous message still being sent
         }
-        catch(ApplicationException e)
-        {
+        catch(ApplicationException e) {
         	// TODO: Output app error
         }
     }

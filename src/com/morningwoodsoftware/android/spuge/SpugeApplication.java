@@ -5,6 +5,9 @@ import java.util.Map;
 
 import android.app.Application;
 import android.util.Log;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.preference.PreferenceManager;
 
 import com.morningwoodsoftware.android.spuge.channel.Channel;
 import com.morningwoodsoftware.android.spuge.channel.ChannelListener;
@@ -16,22 +19,40 @@ import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
 import com.morningwoodsoftware.android.spuge.exception.NotReadyException;
 import com.morningwoodsoftware.android.spuge.util.VenueParser;
 
-public class SpugeApplication extends Application  
+public class SpugeApplication extends Application implements OnSharedPreferenceChangeListener 
 {
+    private static final String TAG = "SPUGE";
+    private static final String KEY_NUMBER = "number";
+
 	private Map<String, Venue> venues = new HashMap<String, Venue>();
 	private Channel channel;
 	private boolean sending = false;
-	
+	private String number;
+
 	@Override
-	public void onCreate()
-	{
+	public void onCreate() {
 		this.channel = new ChannelSmsImpl();
 		
 		// TODO: Init venues
 		// TESTS
         readVenues();
 		
+        // read number from preferences
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
+        this.number = prefs.getString(KEY_NUMBER, null);
+        
 		super.onCreate();
+	}
+
+	/**
+	 * Returns number to send message to
+	 * 
+	 * @return
+	 */
+	public String getNumber() {
+		return number;
 	}
 
 	/**
@@ -39,8 +60,7 @@ public class SpugeApplication extends Application
 	 * 
 	 * @return
 	 */
-	public Map<String, Venue> getVenues()
-	{
+	public Map<String, Venue> getVenues() {
 		return venues;
 	}
 	
@@ -50,10 +70,10 @@ public class SpugeApplication extends Application
 	 * @param venue
 	 */
 	public void sendMessage(Venue venue)
-	throws NotReadyException, ApplicationException
-	{
-		if(sending)
+	throws NotReadyException, ApplicationException {
+		if(sending) {
 			throw new NotReadyException("Still sending previous message!");
+        }
 		
 		// TODO: Get message from venue
 		// Message message = getMessage(venue);
@@ -121,4 +141,12 @@ public class SpugeApplication extends Application
             //FIXME: now what?
         }
     }
+    public synchronized void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        if (key.equals(KEY_NUMBER)) {
+            this.number = prefs.getString(KEY_NUMBER, null);
+            Log.d(TAG, "SpugeApplication.onSharedPreferenceChanged: " + number);
+        }
+        return;
+    }
+
 }

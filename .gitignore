@@ -5,6 +5,7 @@
 *.dex
 gen/**/*
 bin/
+gen/
 etc/
 
 # OS generated files #
