@@ -1,21 +1,23 @@
 package com.morningwoodsoftware.android.spuge.dto;
 
-public class Contact 
+public class Contact
 {
-	private String mobileNr;
+    private String mobileNr;
 
-	public Contact(String mobileNr) {
-		super();
-		this.mobileNr = mobileNr;
-	}
+    public Contact(String mobileNr)
+    {
+        super();
+        this.mobileNr = mobileNr;
+    }
 
-	public String getMobileNr() {
-		return mobileNr;
-	}
+    public String getMobileNr()
+    {
+        return mobileNr;
+    }
 
-	public void setMobileNr(String mobileNr) {
-		this.mobileNr = mobileNr;
-	}
-	
-	
+    public void setMobileNr(String mobileNr)
+    {
+        this.mobileNr = mobileNr;
+    }
+
 }

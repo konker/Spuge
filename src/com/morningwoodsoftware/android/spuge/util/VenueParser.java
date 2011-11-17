@@ -35,71 +35,82 @@ public class VenueParser extends DefaultHandler
     private String curName = null;
     private String curMessage = null;
     private boolean inVenue;
-    
-    public VenueParser(Context context) {
+
+    public VenueParser(Context context)
+    {
         this.context = context;
         this.venues = new HashMap<String, Venue>();
-        //Log.d(TAG, "p:parsed: " + rep);
+        // Log.d(TAG, "p:parsed: " + rep);
     }
 
-    public Map<String, Venue> readVenues() throws Exception {
+    public Map<String, Venue> readVenues() throws Exception
+    {
         // read in and parse the xml
         SAXParserFactory spf = SAXParserFactory.newInstance();
         SAXParser sp = spf.newSAXParser();
         XMLReader xr = sp.getXMLReader();
 
         xr.setContentHandler(this);
-        xr.parse(new InputSource(context.getResources().openRawResource(R.raw.venues)));
+        xr.parse(new InputSource(context.getResources().openRawResource(
+                R.raw.venues)));
 
         return venues;
     }
 
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        //Log.d(TAG, "p:startElement: " + (localName.equals(NAME_QUERY)));
-        if (localName.equalsIgnoreCase(NAME_VENUE)) {
+    public void startElement(String uri, String localName, String qName,
+            Attributes attributes) throws SAXException
+    {
+        // Log.d(TAG, "p:startElement: " + (localName.equals(NAME_QUERY)));
+        if (localName.equalsIgnoreCase(NAME_VENUE))
+        {
             inVenue = true;
             inName = false;
             inMessage = false;
-        }
-        else if (localName.equalsIgnoreCase(NAME_NAME)) {
+        } else if (localName.equalsIgnoreCase(NAME_NAME))
+        {
             inName = true;
             inMessage = false;
-        }
-        else if (localName.equalsIgnoreCase(NAME_MESSAGE)) {
+        } else if (localName.equalsIgnoreCase(NAME_MESSAGE))
+        {
             inMessage = true;
             inName = false;
         }
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement(String uri, String localName, String qName)
+            throws SAXException
+    {
         Log.d(TAG, "p:endElement: " + curName + "," + curMessage);
-        if (localName.equalsIgnoreCase(NAME_VENUE)) {
+        if (localName.equalsIgnoreCase(NAME_VENUE))
+        {
             venues.put(curName, new Venue(curName, curMessage));
             curName = null;
             curMessage = null;
             inVenue = false;
             inName = false;
             inMessage = false;
-        }
-        else if (localName.equalsIgnoreCase(NAME_NAME)) {
+        } else if (localName.equalsIgnoreCase(NAME_NAME))
+        {
             inName = false;
-        }
-        else if (localName.equalsIgnoreCase(NAME_MESSAGE)) {
+        } else if (localName.equalsIgnoreCase(NAME_MESSAGE))
+        {
             inMessage = false;
         }
     }
 
     @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
-        //Log.d(TAG, "p:characters: " + length + ": " + curName);
-        if (inName) {
+    public void characters(char[] ch, int start, int length)
+            throws SAXException
+    {
+        // Log.d(TAG, "p:characters: " + length + ": " + curName);
+        if (inName)
+        {
             curName = new String(ch, start, length);
-        }
-        else if (inMessage) {
+        } else if (inMessage)
+        {
             curMessage = new String(ch, start, length);
         }
     }
 }
-
