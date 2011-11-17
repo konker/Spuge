@@ -7,33 +7,43 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.telephony.SmsManager;
-import android.widget.Toast;
 
 import com.morningwoodsoftware.android.spuge.channel.Channel;
 import com.morningwoodsoftware.android.spuge.channel.ChannelListener;
 import com.morningwoodsoftware.android.spuge.dto.Contact;
 import com.morningwoodsoftware.android.spuge.dto.Message;
+import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
 
 public class ChannelSmsImpl implements Channel
 {
+	private final String SENT = "SMS_SENT";
+	private final String DELIVERED = "SMS_DELIVERED";
 
 	@Override
 	public void send(Message message, Contact receiver) 
+	throws ApplicationException
 	{
-		sendSms(message, receiver, null, null);
+		try
+		{
+			sendSms(message, receiver, null, null);
+		}
+		catch(Exception e)
+		{
+			throw new ApplicationException("Sending message failed!", e);
+		}
 	}
 
 	@Override
 	public void send(Message message, Contact receiver, 
 			final ChannelListener listener) 
+	throws ApplicationException
 	{
-        String SENT = "SMS_SENT";
-        String DELIVERED = "SMS_DELIVERED";
-        
-        PendingIntent sentPI = PendingIntent.getBroadcast(listener.getContext(), 0,
+		try
+		{
+			PendingIntent sentPI = PendingIntent.getBroadcast(listener.getContext(), 0,
         		new Intent(SENT), 0);
 	 
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(listener.getContext(), 0,
+			PendingIntent deliveredPI = PendingIntent.getBroadcast(listener.getContext(), 0,
         		new Intent(DELIVERED), 0);
 	 
 	        //---when the SMS has been sent---
@@ -78,6 +88,11 @@ public class ChannelSmsImpl implements Channel
 	        }, new IntentFilter(DELIVERED) ); 
 
 	        sendSms(message, receiver, sentPI, deliveredPI);
+		}
+		catch(Exception e)
+		{
+			throw new ApplicationException("Sending message failed!", e);
+		}
 	}
 	
 	private void sendSms(Message message, Contact receiver,

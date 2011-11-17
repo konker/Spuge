@@ -2,10 +2,9 @@ package com.morningwoodsoftware.android.spuge.activity;
 
 import java.util.Map;
 
-import android.util.Log;
 import android.app.Activity;
 import android.os.Bundle;
-
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,8 +13,10 @@ import android.widget.LinearLayout;
 import com.morningwoodsoftware.android.R;
 import com.morningwoodsoftware.android.spuge.SpugeApplication;
 import com.morningwoodsoftware.android.spuge.dto.Venue;
+import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
+import com.morningwoodsoftware.android.spuge.exception.NotReadyException;
 
-public class VenuesActivity extends Activity implements OnClickListener
+public class VenueActivity extends Activity implements OnClickListener
 {
     public static final String TAG = "SPUGE";
 
@@ -48,8 +49,22 @@ public class VenuesActivity extends Activity implements OnClickListener
         }
     }
 
-    public void onClick(View view) {
-    	app.sendMessage( null );
+    public void onClick(View view) 
+    {
         Log.d(TAG, "VenuesActivity.onClick: " + ((Button)view).getText());
+        
+        try
+        {
+        	// TODO: Get venue
+        	app.sendMessage( null );
+        }
+        catch(NotReadyException e)
+        {
+        	// TODO: Output previous message still being sent
+        }
+        catch(ApplicationException e)
+        {
+        	// TODO: Output app error
+        }
     }
 }

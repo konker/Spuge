@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.morningwoodsoftware.android.spuge.channel.Channel;
@@ -14,11 +12,15 @@ import com.morningwoodsoftware.android.spuge.channel.impl.sms.ChannelSmsImpl;
 import com.morningwoodsoftware.android.spuge.dto.Contact;
 import com.morningwoodsoftware.android.spuge.dto.Message;
 import com.morningwoodsoftware.android.spuge.dto.Venue;
+import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
+import com.morningwoodsoftware.android.spuge.exception.NotReadyException;
+import com.morningwoodsoftware.android.spuge.util.VenueParser;
 
 public class SpugeApplication extends Application  
 {
 	private Map<String, Venue> venues = new HashMap<String, Venue>();
 	private Channel channel;
+	private boolean sending = false;
 	
 	@Override
 	public void onCreate()
@@ -48,37 +50,45 @@ public class SpugeApplication extends Application
 	 * @param venue
 	 */
 	public void sendMessage(Venue venue)
+	throws NotReadyException, ApplicationException
 	{
+		if(sending)
+			throw new NotReadyException("Still sending previous message!");
+		
 		// TODO: Get message from venue
 		// Message message = getMessage(venue);
 		
 		// TODO: Get receiver
 		
-		// TESTING: Foo message & receiver
+		// TODO: Remove below when fixed
 		Message message = new Message("1", "Some message body");
 		Contact receiver = new Contact("5554");
 		
-		// TODO: Make this properly
+		SpugeApplication.this.sending = true;
+		
+		// TODO: Implement
 		channel.send(message, receiver, 
 				new ChannelListener( this.getApplicationContext() ) 
 		{
 			@Override
 			public void onMessageSent() {
 				Log.d("sendMessage()", "Message sent successfully!");
+				SpugeApplication.this.sending = false;
 				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void onMessageFailed() {
 				Log.d("sendMessage()", "Message failed!");
+				SpugeApplication.this.sending = false;
 				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void onSentMessageReceived() {
 				Log.d("sendMessage()", "Sent Message received!");
+				SpugeApplication.this.sending = false;
 				// TODO Auto-generated method stub
-				
 			}
 		});
 	}

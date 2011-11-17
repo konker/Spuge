@@ -1,22 +1,25 @@
-package com.morningwoodsoftware.android.spuge;
+package com.morningwoodsoftware.android.spuge.util;
 
-import android.util.Log;
-import android.content.Context;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import org.xml.sax.XMLReader;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
+
+import android.content.Context;
+import android.util.Log;
 
 import com.morningwoodsoftware.android.R;
 import com.morningwoodsoftware.android.spuge.dto.Venue;
 
 /* Venue XML parser */
-class VenueParser extends DefaultHandler
+public class VenueParser extends DefaultHandler
 {
     private static final String TAG = "SPUGE";
 
@@ -24,7 +27,6 @@ class VenueParser extends DefaultHandler
     static final String NAME_NAME = "name";
     static final String NAME_MESSAGE = "message";
 
-    private boolean inVenue = false;
     private boolean inName = false;
     private boolean inMessage = false;
 
@@ -32,7 +34,8 @@ class VenueParser extends DefaultHandler
     private Map<String, Venue> venues;
     private String curName = null;
     private String curMessage = null;
-
+    private boolean inVenue;
+    
     public VenueParser(Context context) {
         this.context = context;
         this.venues = new HashMap<String, Venue>();
