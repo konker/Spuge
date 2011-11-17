@@ -37,16 +37,18 @@ public class VenuesActivity extends Activity implements OnClickListener
     }
 
     private void renderVenues() {
-        Map<String, Venue> venues = app.getVenues();
-        for (Venue venue : venues.values()) {
-            Button b = new Button(this);
-            b.setText(venue.getName());
-            b.setOnClickListener(this);
-            venueLayout.addView(b);
+        if (venueLayout != null) {
+            Map<String, Venue> venues = app.getVenues();
+            for (Venue venue : venues.values()) {
+                Button b = new Button(this);
+                b.setText(venue.getName());
+                b.setOnClickListener(this);
+                venueLayout.addView(b);
+            }
         }
     }
 
     public void onClick(View view) {
-        Log.d(TAG, "VenuesActivity.onClick: " + view);
+        Log.d(TAG, "VenuesActivity.onClick: " + ((Button)view).getText());
     }
 }
