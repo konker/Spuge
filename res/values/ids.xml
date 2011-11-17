@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <item type="id" name="venueLayout"/>
+  <item type="id" name="itemVenue"/>
+  <item type="id" name="itemPrefs"/>
 </resources>
