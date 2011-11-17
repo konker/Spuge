@@ -60,10 +60,12 @@ public class VenueActivity extends Activity implements OnClickListener
         }
         catch(NotReadyException e)
         {
+        	Log.e("onClick", "NotReadyException", e);
         	// TODO: Output previous message still being sent
         }
         catch(ApplicationException e)
         {
+        	Log.e("onClick", "ApplicationException", e);
         	// TODO: Output app error
         }
     }

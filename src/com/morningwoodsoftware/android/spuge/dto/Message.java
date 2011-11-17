@@ -10,6 +10,10 @@ public class Message
 		this.id = id;
 		this.body = body;
 	}
+	public Message(String body) {
+		super();
+		this.body = body;
+	}
 	public String getId() {
 		return id;
 	}

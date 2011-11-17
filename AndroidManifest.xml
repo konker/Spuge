@@ -14,6 +14,12 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".spuge.channel.impl.sms.ChannelSmsImpl" android:enabled="true"> 
+            <intent-filter> 
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
+            </intent-filter> 
+        </receiver>
+
     </application>
     
     <uses-permission android:name="android.permission.SEND_SMS">

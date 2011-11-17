@@ -3,6 +3,7 @@ package com.morningwoodsoftware.android.spuge;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.util.Log;
 
@@ -25,7 +26,19 @@ public class SpugeApplication extends Application
 	@Override
 	public void onCreate()
 	{
-		this.channel = new ChannelSmsImpl();
+		this.channel = new ChannelSmsImpl()
+		{
+			@Override
+			public void onReceive(Message message)
+			{
+				// TODO: What to do next?
+				AlertDialog.Builder popup = new AlertDialog.Builder(SpugeApplication.this);
+				popup.setTitle("New SMS");
+				popup.setIcon(android.R.drawable.ic_dialog_alert);
+				popup.setMessage( message.getBody() );
+				popup.show();
+			}
+		};
 		
 		// TODO: Init venues
 		// TESTS
@@ -61,8 +74,8 @@ public class SpugeApplication extends Application
 		// TODO: Get receiver
 		
 		// TODO: Remove below when fixed
-		Message message = new Message("1", "Some message body");
-		Contact receiver = new Contact("5554");
+		Message message = new Message("Some message body");
+		Contact receiver = new Contact("5556");
 		
 		SpugeApplication.this.sending = true;
 		
