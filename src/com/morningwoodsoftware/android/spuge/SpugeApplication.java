@@ -47,7 +47,7 @@ public class SpugeApplication extends Application
 	 * 
 	 * @param venue
 	 */
-	public void sendMessage(Venue venue, final Intent intent)
+	public void sendMessage(Venue venue)
 	{
 		// TODO: Get message from venue
 		// Message message = getMessage(venue);
