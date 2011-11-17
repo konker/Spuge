@@ -105,18 +105,16 @@ implements Channel
 	@Override
 	public void onReceive(Context context, Intent intent) 
 	{
-		String body = "";
 		try
 		{
-			body = getBody( intent.getExtras() );
+			String body = getBody( intent.getExtras() );
+			Log.d("onReceive", "Received SMS: "+body);
+			onReceive( new Message(body) );
 		}
 		catch(Exception e) 
 		{
 			Log.e("onReceive", "Exception", e);
-			body = e.toString();
 		}
-		Log.d("onReceive", "Received SMS: "+body);
-		onReceive( new Message(body) );
 	}
         
     private String getBody(Bundle bundle)
@@ -129,8 +127,8 @@ implements Channel
         for (int i=0; i<msgs.length; i++)
         {
             msgs[i] = SmsMessage.createFromPdu( (byte[])pdus[i] );                
-            sb.append( msgs[i].getOriginatingAddress() ).append(": ");
-            sb.append( msgs[i].getMessageBody().toString() ).append("\n");
+            // sb.append( msgs[i].getOriginatingAddress() ).append(": ");
+            sb.append( msgs[i].getMessageBody().toString() );
         }		
         return sb.toString();
     }

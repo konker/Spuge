@@ -39,6 +39,8 @@ public class SpugeApplication extends Application implements OnSharedPreferenceC
 			@Override
 			public void onReceive(Message message)
 			{
+				Log.d("SpugeApplication.onCreate", "Message = "+message.getBody() );
+				
 				// TODO: What to do next?
 				AlertDialog.Builder popup = new AlertDialog.Builder(SpugeApplication.this);
 				popup.setTitle("New SMS");
