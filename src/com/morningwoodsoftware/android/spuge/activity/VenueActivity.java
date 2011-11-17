@@ -61,11 +61,12 @@ public class VenueActivity extends Activity implements OnClickListener
     }
 
     public void onClick(View view) {
-        Log.d(TAG, "VenuesActivity.onClick: " + ((Button)view).getText());
+        String name = ((Button)view).getText().toString();
+        Log.d(TAG, "VenuesActivity.onClick: " + name);
         
         try {
-        	// TODO: Get venue
-        	app.sendMessage( null );
+        	// XXX: should name be used as a key?
+        	app.sendMessage(app.getVenueByName(name));
         }
         catch(NotReadyException e)
         {

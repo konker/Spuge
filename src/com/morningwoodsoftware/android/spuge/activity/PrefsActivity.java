@@ -8,10 +8,6 @@ import android.view.View;
 import android.view.MenuItem;
 import android.view.Menu;
 
-import android.preference.PreferenceManager;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-
 import com.morningwoodsoftware.android.R;
 import com.morningwoodsoftware.android.spuge.SpugeApplication;
 

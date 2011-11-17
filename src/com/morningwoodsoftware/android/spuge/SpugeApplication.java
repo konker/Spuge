@@ -7,6 +7,10 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.util.Log;
 
+import android.preference.PreferenceManager;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+
 import com.morningwoodsoftware.android.spuge.channel.Channel;
 import com.morningwoodsoftware.android.spuge.channel.ChannelListener;
 import com.morningwoodsoftware.android.spuge.channel.impl.sms.ChannelSmsImpl;
@@ -17,11 +21,15 @@ import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
 import com.morningwoodsoftware.android.spuge.exception.NotReadyException;
 import com.morningwoodsoftware.android.spuge.util.VenueParser;
 
-public class SpugeApplication extends Application  
+public class SpugeApplication extends Application implements OnSharedPreferenceChangeListener
 {
+    private static final String TAG = "SPUGE";
+    private static final String KEY_NUMBER = "number";
+
 	private Map<String, Venue> venues = new HashMap<String, Venue>();
 	private Channel channel;
 	private boolean sending = false;
+    private String number;
 	
 	@Override
 	public void onCreate()
@@ -44,8 +52,22 @@ public class SpugeApplication extends Application
 		// TESTS
         readVenues();
 		
+        // Get number from preferences and listen for changes to this number
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        this.number = prefs.getString(KEY_NUMBER, null);
+        
 		super.onCreate();
 	}
+
+	/**
+	 * Returns number to send messages to
+	 * 
+	 * @return
+	 */
+    public String getNumber() {
+        return number;
+    }
 
 	/**
 	 * Returns list of venues
@@ -57,6 +79,10 @@ public class SpugeApplication extends Application
 		return venues;
 	}
 	
+    public Venue getVenueByName(String name) {
+        return venues.get(name);
+    }
+
 	/**
 	 * Sends a venue using a Channel
 	 * 
@@ -65,17 +91,21 @@ public class SpugeApplication extends Application
 	public void sendMessage(Venue venue)
 	throws NotReadyException, ApplicationException
 	{
-		if(sending)
+		if (sending) {
 			throw new NotReadyException("Still sending previous message!");
+        }
 		
 		// TODO: Get message from venue
-		// Message message = getMessage(venue);
+		Message message = getMessage(venue);
+		Contact receiver = new Contact(number);
 		
 		// TODO: Get receiver
 		
 		// TODO: Remove below when fixed
+        /*
 		Message message = new Message("Some message body");
 		Contact receiver = new Contact("5556");
+        */
 		
 		SpugeApplication.this.sending = true;
 		
@@ -114,8 +144,8 @@ public class SpugeApplication extends Application
 	 */
 	private Message getMessage(Venue venue)
 	{
-		// TODO: Return matching message
-		return null;
+		// TODO: id?
+		return new Message("FIXME:ID", venue.getQuestion());
 	}
 
 	/**
@@ -133,5 +163,14 @@ public class SpugeApplication extends Application
         catch(Exception ex) {
             //FIXME: now what?
         }
+    }
+
+    /* method required by OnSharedPreferenceChangeListener */
+    @Override
+    public synchronized void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        if (key.equals(KEY_NUMBER)) {
+            number = prefs.getString(KEY_NUMBER, null);
+        }
+        return;
     }
 }
