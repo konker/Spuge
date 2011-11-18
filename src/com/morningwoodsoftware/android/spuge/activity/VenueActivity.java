@@ -75,11 +75,13 @@ public class VenueActivity extends Activity implements OnClickListener
         {
             // XXX: should name be used as a key?
             app.sendMessage(app.getVenueByName(name));
-        } catch (NotReadyException e)
+        }
+        catch (NotReadyException e)
         {
             Log.e("onClick", "NotReadyException", e);
             // TODO: Output previous message still being sent
-        } catch (ApplicationException e)
+        }
+        catch (ApplicationException e)
         {
             Log.e("onClick", "ApplicationException", e);
             // TODO: Output app error

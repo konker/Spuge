@@ -67,11 +67,13 @@ public class VenueParser extends DefaultHandler
             inVenue = true;
             inName = false;
             inMessage = false;
-        } else if (localName.equalsIgnoreCase(NAME_NAME))
+        }
+        else if (localName.equalsIgnoreCase(NAME_NAME))
         {
             inName = true;
             inMessage = false;
-        } else if (localName.equalsIgnoreCase(NAME_MESSAGE))
+        }
+        else if (localName.equalsIgnoreCase(NAME_MESSAGE))
         {
             inMessage = true;
             inName = false;
@@ -91,10 +93,12 @@ public class VenueParser extends DefaultHandler
             inVenue = false;
             inName = false;
             inMessage = false;
-        } else if (localName.equalsIgnoreCase(NAME_NAME))
+        }
+        else if (localName.equalsIgnoreCase(NAME_NAME))
         {
             inName = false;
-        } else if (localName.equalsIgnoreCase(NAME_MESSAGE))
+        }
+        else if (localName.equalsIgnoreCase(NAME_MESSAGE))
         {
             inMessage = false;
         }
@@ -108,7 +112,8 @@ public class VenueParser extends DefaultHandler
         if (inName)
         {
             curName = new String(ch, start, length);
-        } else if (inMessage)
+        }
+        else if (inMessage)
         {
             curMessage = new String(ch, start, length);
         }

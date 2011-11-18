@@ -3,7 +3,6 @@ package com.morningwoodsoftware.android.spuge;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.app.AlertDialog;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -11,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.morningwoodsoftware.android.spuge.channel.Channel;
-import com.morningwoodsoftware.android.spuge.channel.ReceiveMessageListener;
 import com.morningwoodsoftware.android.spuge.channel.SendMessageListener;
 import com.morningwoodsoftware.android.spuge.channel.impl.sms.ChannelSmsImpl;
 import com.morningwoodsoftware.android.spuge.dto.Contact;
@@ -35,23 +33,7 @@ public class SpugeApplication extends Application implements
     @Override
     public void onCreate()
     {
-        this.channel = new ChannelSmsImpl(new ReceiveMessageListener()
-        {
-            @Override
-            public void onReceive(Message message)
-            {
-                Log.d("SpugeApplication.onCreate",
-                        "Message = " + message.getBody());
-
-                // TODO: What to do next?
-                AlertDialog.Builder popup = new AlertDialog.Builder(
-                        SpugeApplication.this);
-                popup.setTitle("New SMS");
-                popup.setIcon(android.R.drawable.ic_dialog_alert);
-                popup.setMessage(message.getBody());
-                popup.show();
-            }
-        });
+        this.channel = new ChannelSmsImpl();
 
         // TODO: Init venues
         // TESTS
@@ -173,13 +155,14 @@ public class SpugeApplication extends Application implements
         try
         {
             venues = parser.readVenues();
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             // FIXME: now what?
         }
     }
 
-    /* method required by OnSharedPreferenceChangeListener */
+    /* method required by OnSharedPreferenceChangeListenerÄ */
     @Override
     public synchronized void onSharedPreferenceChanged(SharedPreferences prefs,
             String key)

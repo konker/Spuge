@@ -12,7 +12,6 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.morningwoodsoftware.android.spuge.channel.Channel;
-import com.morningwoodsoftware.android.spuge.channel.ReceiveMessageListener;
 import com.morningwoodsoftware.android.spuge.channel.SendMessageListener;
 import com.morningwoodsoftware.android.spuge.dto.Contact;
 import com.morningwoodsoftware.android.spuge.dto.Message;
@@ -22,11 +21,10 @@ public class ChannelSmsImpl extends BroadcastReceiver implements Channel
 {
     private final String SENT = "SMS_SENT";
     private final String DELIVERED = "SMS_DELIVERED";
-    private ReceiveMessageListener receiveListener;
 
-    public ChannelSmsImpl(ReceiveMessageListener receiveListener)
+    public ChannelSmsImpl()
     {
-        this.receiveListener = receiveListener;
+
     }
 
     @Override
@@ -94,7 +92,8 @@ public class ChannelSmsImpl extends BroadcastReceiver implements Channel
             }, new IntentFilter(DELIVERED));
 
             sendSms(message, receiver, sentPI, deliveredPI);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw new ApplicationException("Sending message failed!", e);
         }
@@ -115,9 +114,11 @@ public class ChannelSmsImpl extends BroadcastReceiver implements Channel
         {
             String body = getBody(intent.getExtras());
             Log.d("onReceive", "Received SMS: " + body);
-            if (this.receiveListener != null)
-                this.receiveListener.onReceive(new Message(body));
-        } catch (Exception e)
+
+            // TODO: Show Toast Widget
+
+        }
+        catch (Exception e)
         {
             Log.e("onReceive", "Exception", e);
         }
