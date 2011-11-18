@@ -5,7 +5,8 @@
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="10" />
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".spuge.SpugeApplication">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" 
+        android:name=".spuge.SpugeApplication">
         <activity android:name=".spuge.activity.VenueActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -16,7 +17,7 @@
         <activity android:name=".spuge.activity.PrefsActivity"
                   android:label="@string/app_name"/>
 
-        <receiver android:name=".spuge.channel.impl.sms.ChannelSmsImpl" android:enabled="true"> 
+        <receiver android:name=".spuge.receiver.SmsReceiver" android:enabled="true"> 
             <intent-filter> 
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
             </intent-filter> 

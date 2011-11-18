@@ -17,7 +17,7 @@ import com.morningwoodsoftware.android.spuge.dto.Contact;
 import com.morningwoodsoftware.android.spuge.dto.Message;
 import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
 
-public class ChannelSmsImpl extends BroadcastReceiver implements Channel
+public class ChannelSmsImpl implements Channel
 {
     private final String SENT = "SMS_SENT";
     private final String DELIVERED = "SMS_DELIVERED";
@@ -105,38 +105,5 @@ public class ChannelSmsImpl extends BroadcastReceiver implements Channel
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(receiver.getMobileNr(), null, message.getBody(),
                 sentPI, deliveredPI);
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent)
-    {
-        try
-        {
-            String body = getBody(intent.getExtras());
-            Log.d("onReceive", "Received SMS: " + body);
-
-            // TODO: Show Toast Widget
-
-        }
-        catch (Exception e)
-        {
-            Log.e("onReceive", "Exception", e);
-        }
-    }
-
-    private String getBody(Bundle bundle)
-    {
-        // ---retrieve the SMS message received---
-        Object[] pdus = (Object[]) bundle.get("pdus");
-        SmsMessage[] msgs = new SmsMessage[pdus.length];
-        StringBuffer sb = new StringBuffer();
-
-        for (int i = 0; i < msgs.length; i++)
-        {
-            msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
-            // sb.append( msgs[i].getOriginatingAddress() ).append(": ");
-            sb.append(msgs[i].getMessageBody().toString());
-        }
-        return sb.toString();
     }
 }
