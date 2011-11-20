@@ -5,5 +5,6 @@
     <string name="titleVenue">Venues</string>
     <string name="titlePrefs">Preferences</string>
     <string name="titleNumber">Number</string>
-    <string name="summaryNumber">FIXME: Number summary</string>
+    <string name="sending">Sending</string>
+    <string name="summaryNumber">Number of your only friend</string>
 </resources>

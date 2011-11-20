@@ -17,6 +17,7 @@ import com.morningwoodsoftware.android.spuge.SpugeApplication;
 import com.morningwoodsoftware.android.spuge.dto.Venue;
 import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
 import com.morningwoodsoftware.android.spuge.exception.NotReadyException;
+import com.morningwoodsoftware.android.spuge.util.DelayedCancelProgressDialog;
 
 public class VenueActivity extends Activity
 {
@@ -67,11 +68,13 @@ public class VenueActivity extends Activity
                     @Override
                     public void onClick(View view)
                     {
-                        Log.d(TAG, "VenuesActivity.onClick: " + idx);
+                        DelayedCancelProgressDialog.showDialog(VenueActivity.this, "Loading", "Please wait while activity is loading", "Cancel");        
 
+                        Log.d(TAG, "VenuesActivity.onClick: " + idx);
+                        
                         try
                         {
-                            app.sendMessage(app.getVenueByIndex(idx));
+                            //app.sendMessage(app.getVenueByIndex(idx));
                         }
                         catch (NotReadyException e)
                         {
