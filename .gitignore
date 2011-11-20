@@ -15,6 +15,7 @@ ehthumbs.db
 Icon?
 Thumbs.db
 
-# Tags file
+# Other
 ######################
 .tags
+local.properties

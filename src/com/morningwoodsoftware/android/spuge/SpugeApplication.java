@@ -1,6 +1,7 @@
 package com.morningwoodsoftware.android.spuge;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Application;
@@ -25,7 +26,7 @@ public class SpugeApplication extends Application implements
     private static final String TAG = "SPUGE";
     private static final String KEY_NUMBER = "number";
 
-    private Map<String, Venue> venues = new HashMap<String, Venue>();
+    private List<Venue> venues = new ArrayList<Venue>();
     private Channel channel;
     private boolean sending = false;
     private String number;
@@ -63,14 +64,14 @@ public class SpugeApplication extends Application implements
      * 
      * @return
      */
-    public Map<String, Venue> getVenues()
+    public List<Venue> getVenues()
     {
         return venues;
     }
 
-    public Venue getVenueByName(String name)
+    public Venue getVenueByIndex(int i)
     {
-        return venues.get(name);
+        return venues.get(i);
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.morningwoodsoftware.android.spuge.util;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -31,7 +31,7 @@ public class VenueParser extends DefaultHandler
     private boolean inMessage = false;
 
     private Context context;
-    private Map<String, Venue> venues;
+    private List<Venue> venues;
     private String curName = null;
     private String curMessage = null;
     private boolean inVenue;
@@ -39,11 +39,11 @@ public class VenueParser extends DefaultHandler
     public VenueParser(Context context)
     {
         this.context = context;
-        this.venues = new HashMap<String, Venue>();
+        this.venues = new ArrayList<Venue>();
         // Log.d(TAG, "p:parsed: " + rep);
     }
 
-    public Map<String, Venue> readVenues() throws Exception
+    public List<Venue> readVenues() throws Exception
     {
         // read in and parse the xml
         SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -87,7 +87,7 @@ public class VenueParser extends DefaultHandler
         Log.d(TAG, "p:endElement: " + curName + "," + curMessage);
         if (localName.equalsIgnoreCase(NAME_VENUE))
         {
-            venues.put(curName, new Venue(curName, curMessage));
+            venues.add(new Venue(curName, curMessage));
             curName = null;
             curMessage = null;
             inVenue = false;

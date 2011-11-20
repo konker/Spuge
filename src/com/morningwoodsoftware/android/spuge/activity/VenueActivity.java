@@ -1,14 +1,14 @@
 package com.morningwoodsoftware.android.spuge.activity;
 
-import java.util.Map;
+import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.MenuItem;
-import android.view.Menu;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -18,7 +18,7 @@ import com.morningwoodsoftware.android.spuge.dto.Venue;
 import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
 import com.morningwoodsoftware.android.spuge.exception.NotReadyException;
 
-public class VenueActivity extends Activity implements OnClickListener
+public class VenueActivity extends Activity
 {
     public static final String TAG = "SPUGE";
 
@@ -55,36 +55,40 @@ public class VenueActivity extends Activity implements OnClickListener
     {
         if (venueLayout != null)
         {
-            Map<String, Venue> venues = app.getVenues();
-            for (Venue venue : venues.values())
+            List<Venue> venues = app.getVenues();
+            for (int i=0; i<venues.size(); i++)
             {
+                Venue venue = venues.get(i);
                 Button b = new Button(this);
                 b.setText(venue.getName());
-                b.setOnClickListener(this);
+                final int idx = i;
+                b.setOnClickListener(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        Log.d(TAG, "VenuesActivity.onClick: " + idx);
+
+                        try
+                        {
+                            app.sendMessage(app.getVenueByIndex(idx));
+                        }
+                        catch (NotReadyException e)
+                        {
+                            Log.e("onClick", "NotReadyException", e);
+                            // TODO: Output previous message still being sent
+                        }
+                        catch (ApplicationException e)
+                        {
+                            Log.e("onClick", "ApplicationException", e);
+                            // TODO: Output app error
+                        }
+                        
+                    }
+                    
+                });
                 venueLayout.addView(b);
             }
-        }
-    }
-
-    public void onClick(View view)
-    {
-        String name = ((Button) view).getText().toString();
-        Log.d(TAG, "VenuesActivity.onClick: " + name);
-
-        try
-        {
-            // XXX: should name be used as a key?
-            app.sendMessage(app.getVenueByName(name));
-        }
-        catch (NotReadyException e)
-        {
-            Log.e("onClick", "NotReadyException", e);
-            // TODO: Output previous message still being sent
-        }
-        catch (ApplicationException e)
-        {
-            Log.e("onClick", "ApplicationException", e);
-            // TODO: Output app error
         }
     }
 }
