@@ -2,13 +2,13 @@ package com.morningwoodsoftware.android.spuge;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.morningwoodsoftware.android.spuge.channel.Channel;
 import com.morningwoodsoftware.android.spuge.channel.SendMessageListener;
@@ -110,6 +110,7 @@ public class SpugeApplication extends Application implements
                     {
                         Log.d("sendMessage()", "Message sent successfully!");
                         SpugeApplication.this.sending = false;
+                        Toast.makeText(this.getContext(), "Message sent successfully!", Toast.LENGTH_SHORT).show();
                         // TODO Auto-generated method stub
                     }
 
@@ -118,6 +119,7 @@ public class SpugeApplication extends Application implements
                     {
                         Log.d("sendMessage()", "Message failed!");
                         SpugeApplication.this.sending = false;
+                        Toast.makeText(this.getContext(), "Message sending failed!", Toast.LENGTH_SHORT).show();
                         // TODO Auto-generated method stub
                     }
 
@@ -125,6 +127,7 @@ public class SpugeApplication extends Application implements
                     public void onSentMessageReceived()
                     {
                         Log.d("sendMessage()", "Sent Message received!");
+                        Toast.makeText(this.getContext(), "Message received successfully!", Toast.LENGTH_SHORT).show();
                         SpugeApplication.this.sending = false;
                         // TODO Auto-generated method stub
                     }
