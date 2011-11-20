@@ -1,0 +1,6 @@
+- SMS received
+* - Refactor to List, pass ID in Event
+- Make Venues configurable
+- Option to add time into question SMS: "Anna K in 30 minutes? ¿1:12384123812?"
+- Option to add time into answer SMS: "Ok, in 35 minutes ¡Y:1247124712471!"
+
