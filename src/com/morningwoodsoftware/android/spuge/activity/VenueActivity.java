@@ -17,6 +17,8 @@ import com.morningwoodsoftware.android.spuge.SpugeApplication;
 import com.morningwoodsoftware.android.spuge.dto.Venue;
 import com.morningwoodsoftware.android.spuge.exception.ApplicationException;
 import com.morningwoodsoftware.android.spuge.exception.NotReadyException;
+import com.morningwoodsoftware.android.spuge.util.DelayCancelProgressDialogListener;
+import com.morningwoodsoftware.android.spuge.util.DelayedCancelProgressDialog;
 
 public class VenueActivity extends Activity
 {
@@ -56,7 +58,7 @@ public class VenueActivity extends Activity
         if (venueLayout != null)
         {
             List<Venue> venues = app.getVenues();
-            for (int i=0; i<venues.size(); i++)
+            for (int i = 0; i < venues.size(); i++)
             {
                 Venue venue = venues.get(i);
                 Button b = new Button(this);
@@ -69,23 +71,39 @@ public class VenueActivity extends Activity
                     {
                         Log.d(TAG, "VenuesActivity.onClick: " + idx);
 
-                        try
-                        {
-                            app.sendMessage(app.getVenueByIndex(idx));
-                        }
-                        catch (NotReadyException e)
-                        {
-                            Log.e("onClick", "NotReadyException", e);
-                            // TODO: Output previous message still being sent
-                        }
-                        catch (ApplicationException e)
-                        {
-                            Log.e("onClick", "ApplicationException", e);
-                            // TODO: Output app error
-                        }
-                        
+                        new DelayedCancelProgressDialog().showDialog(
+                                VenueActivity.this, 
+                                "Sending",
+                                "About to send...",
+                                "Cancel", 
+                                5000L,
+                                new DelayCancelProgressDialogListener()
+                                {
+
+                                    @Override
+                                    public void onComplete()
+                                    {
+                                        try
+                                        {
+                                            app.sendMessage(app.getVenueByIndex(idx));
+                                        }
+                                        catch (NotReadyException e)
+                                        {
+                                            Log.e("onClick",
+                                                    "NotReadyException", e);
+                                            // TODO: Output previous message
+                                            // still being sent
+                                        }
+                                        catch (ApplicationException e)
+                                        {
+                                            Log.e("onClick",
+                                                    "ApplicationException", e);
+                                            // TODO: Output app error
+                                        }
+                                    }
+                                });
                     }
-                    
+
                 });
                 venueLayout.addView(b);
             }
