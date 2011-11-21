@@ -18,7 +18,7 @@ public class SmsReceiver extends BroadcastReceiver
             String body = getBody(intent.getExtras());
             Log.d("onReceive", "Received SMS: " + body);
 
-            // TODO: Show Toast Widget
+            // TODO: Show Toast Widget. Test
             Toast.makeText(context, body, Toast.LENGTH_SHORT).show();
 
         }
