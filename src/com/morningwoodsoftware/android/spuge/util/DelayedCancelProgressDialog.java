@@ -7,15 +7,13 @@ import android.content.DialogInterface;
 public class DelayedCancelProgressDialog
 {
     private static ProgressDialog cancelDialog;
-    
-    public void showDialog(Context context, String title,
-            String message, String buttonText, long delayMs, 
-            DelayCancelProgressDialogListener l
-            )
+
+    public void showDialog(Context context, String title, String message,
+            String buttonText, long delayMs, DelayCancelProgressDialogListener l)
     {
         // Start thread
         final DelayThread delayThread = new DelayThread(delayMs, l);
-        
+
         cancelDialog = new ProgressDialog(context);
         cancelDialog.setTitle(title);
         cancelDialog.setMessage(message);
@@ -32,24 +30,24 @@ public class DelayedCancelProgressDialog
         cancelDialog.show();
         delayThread.start();
     }
-    
+
     class DelayThread extends Thread
     {
         private long delayMs;
         private DelayCancelProgressDialogListener l;
         private boolean cancel;
-        
+
         public DelayThread(long delayMs, DelayCancelProgressDialogListener l)
         {
             this.delayMs = delayMs;
             this.l = l;
         }
-        
+
         public void cancel()
         {
             this.cancel = true;
         }
-        
+
         @Override
         public void run()
         {
@@ -57,21 +55,21 @@ public class DelayedCancelProgressDialog
             {
                 Thread.sleep(delayMs);
 
-                if(!this.cancel)
+                if (!this.cancel)
                 {
                     // Close popup
                     cancelDialog.dismiss();
                     
                     l.onComplete();
                 }
-                
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                
+
                 // TODO
             }
         }
-        
+
     }
 }

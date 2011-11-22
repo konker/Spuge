@@ -1,12 +1,13 @@
 package com.morningwoodsoftware.android.spuge.receiver;
 
+import com.morningwoodsoftware.android.spuge.activity.MessageReceiverActivity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
-import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver
 {
@@ -19,7 +20,19 @@ public class SmsReceiver extends BroadcastReceiver
             Log.d("onReceive", "Received SMS: " + body);
 
             // TODO: Show Toast Widget. Test
-            Toast.makeText(context, body, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(context, body, Toast.LENGTH_SHORT).show();
+            
+            Intent i = new Intent(context, MessageReceiverActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            
+            /*
+            Intent i = new Intent();
+            i.setClassName("com.morningwoodsoftware.android.spuge.activity", 
+                    "MessageReceiverActivity");
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            */
+            context.startActivity(i);
+            
 
         }
         catch (Exception e)
@@ -28,9 +41,9 @@ public class SmsReceiver extends BroadcastReceiver
         }
     }
 
+    // ---retrieve the SMS message received---
     private String getBody(Bundle bundle)
     {
-        // ---retrieve the SMS message received---
         Object[] pdus = (Object[]) bundle.get("pdus");
         SmsMessage[] msgs = new SmsMessage[pdus.length];
         StringBuffer sb = new StringBuffer();
