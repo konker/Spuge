@@ -166,7 +166,7 @@ public class SpugeApplication extends Application implements
         }
     }
 
-    /* method required by OnSharedPreferenceChangeListenerÄ */
+    /* method required by OnSharedPreferenceChangeListener? */
     @Override
     public synchronized void onSharedPreferenceChanged(SharedPreferences prefs,
             String key)
